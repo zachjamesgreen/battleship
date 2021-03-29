@@ -1,4 +1,10 @@
 # DTR: Define the Relationship
+Zach & Regina
+Work hard on the weekdays. Maybe stay up late if we have too.
+
+
+
+
 
 Use this template when conducting DTR with your project partners. *It's recommended that you copy/paste this template into your own gist each time you conduct a DTR to take notes on the conversation.* 
 
