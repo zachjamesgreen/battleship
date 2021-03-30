@@ -19,6 +19,10 @@ class Cell
   end
 
   def fire_upon
+    if !fired_upon? && !empty? && @ship.health != 0
+      # require 'pry'; binding.pry
+      @ship.hit
+    end
     @hit = true
   end
 

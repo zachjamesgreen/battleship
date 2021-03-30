@@ -43,25 +43,37 @@ RSpec.describe 'Cell' do
       expect(cell.fired_upon?).to eq(true)
     end
 
-    it 'method can be empty and missed' do
+    it 'can hit ship' do
       cell = Cell.new("A2")
       ship = Ship.new("Cruiser", 3)
+      cell.place_ship(ship)
+      expect(ship.health).to eq(3)
+      cell.fire_upon
+      expect(ship.health).to eq(2)
+    end
+
+    it 'method can be empty and missed' do
+      cell = Cell.new("A2")
       expect(cell.render).to eq(".")
       cell.fire_upon
       expect(cell.render).to eq("M")
     end
 
+
     it 'method renders correctly' do
-      cell = Cell.new("A2")
+      cell_1 = Cell.new("A1")
+      cell_2 = Cell.new("A2")
+      cell_3 = Cell.new("A3")
       ship = Ship.new("Cruiser", 3)
-      cell.place_ship(ship)
-      expect(cell.render(true)).to eq("S")
-      cell.fire_upon
-      ship.hit
-      expect(cell.render).to eq("H")
-      ship.hit
-      ship.hit
-      expect(cell.render).to eq("X")
+      cell_1.place_ship(ship)
+      cell_2.place_ship(ship)
+      cell_3.place_ship(ship)
+      expect(cell_1.render(true)).to eq("S")
+      cell_1.fire_upon
+      expect(cell_1.render).to eq("H")
+      cell_2.fire_upon
+      cell_3.fire_upon
+      expect(cell_1.render).to eq("X")
     end
 
 

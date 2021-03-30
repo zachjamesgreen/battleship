@@ -19,8 +19,22 @@ RSpec.describe 'Board' do
 
   it 'should be valid placement' do
     board = Board.new
-    ship = Ship.new("Cruiser", 3)
-    expect(board.valid_placement?(ship,["A1", "A2"])).to be nil
-    expect(board.valid_placement?(ship,["A1", "A2", "A3"])).to be nil
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    # Testing Cruiser
+    expect(board.valid_placement?(cruiser,["A1", "B1", "C1"])).to be true
+    # Testing length
+    expect(board.valid_placement?(cruiser,["A1", "A2"])).to be false
+    expect(board.valid_placement?(cruiser,["A1", "A2", "A3", "A4"])).to be false
+    # Testing diagonal
+    expect(board.valid_placement?(cruiser,["A1", "B2", "C3"])).to be false
+
+    # Testing sub
+    expect(board.valid_placement?(submarine,["A1", "B1"])).to be true
+    # Testing length
+    expect(board.valid_placement?(submarine,["A1"])).to be false
+    expect(board.valid_placement?(submarine,["A1", "A2", "A3"])).to be false
+    # Testing diagonal
+    expect(board.valid_placement?(submarine,["A1", "B2"])).to be false
   end
 end

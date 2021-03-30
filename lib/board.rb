@@ -12,23 +12,38 @@ class Board
 
   def valid_placement?(ship, coordinates)
     if ship.length == coordinates.length
+      letters = []
+      numbers = []
       coordinates.each do |coordinate|
         if valid_coordinate?(coordinate) == false
           return false
         end
+        letters << coordinate[0]
+        numbers << coordinate[1]
       end
-      letters_variable = []
-      numbers_variable = []
-      coordinates.each do |coordinate|
-        letters_variable << coordinate[0]
-        numbers_variable << coordinate[1]
-      end
-      if letters_variable.uniq || numbers_variable.uniq == false
-        return false
-      end  
-      require 'pry';binding.pry
-    end
+      if letters.uniq.length == 1 || numbers.uniq.length == 1
+        if letters.uniq.length != 1
+          letters.each_cons(2) do |letter|
+            # require 'pry'; binding.pry
+            if letter[0].ord - letter[1].ord == 1 || letter[0].ord - letter[1].ord == -1
+              return true
+            end
+          end
+        end
 
+        if numbers.uniq.length != 1
+          numbers.each_cons(2) do |number|
+            # require 'pry'; binding.pry
+            if number[0].ord - number[1].ord == 1 || number[0].ord - number[1].ord == -1
+              return true
+            end
+          end
+        end
+
+
+      end
+    end
+    false
   end
 
 # coordinate @cells.keys[0][0] && 1,2,3
