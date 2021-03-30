@@ -46,6 +46,21 @@ class Board
     false
   end
 
+  def render(show_ship = false)
+    string = "  1 2 3 4 \n"
+    string += "A #{cells["A1"].render(show_ship)} #{cells["A2"].render(show_ship)} #{cells["A3"].render(show_ship)} #{cells["A4"].render(show_ship)} \n"
+    string += "B #{cells["B1"].render(show_ship)} #{cells["B2"].render(show_ship)} #{cells["B3"].render(show_ship)} #{cells["B4"].render(show_ship)} \n"
+    string += "C #{cells["C1"].render(show_ship)} #{cells["C2"].render(show_ship)} #{cells["C3"].render(show_ship)} #{cells["C4"].render(show_ship)} \n"
+    string += "D #{cells["D1"].render(show_ship)} #{cells["D2"].render(show_ship)} #{cells["D3"].render(show_ship)} #{cells["D4"].render(show_ship)} \n"
+    string
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
+
 # coordinate @cells.keys[0][0] && 1,2,3
 # coordinate cells.keys[0][1] && A,B,C
 

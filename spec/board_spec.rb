@@ -37,4 +37,28 @@ RSpec.describe 'Board' do
     # Testing diagonal
     expect(board.valid_placement?(submarine,["A1", "B2"])).to be false
   end
+
+  it 'can be rendered' do
+    board = Board.new
+    rendered_board = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    expect(board.render).to eq(rendered_board)
+  end
+
+  it 'can be placed' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    rendered_board = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+    expect(board.render(true)).to eq(rendered_board)
+    board.cells["A1"].fire_upon
+    rendered_board = "  1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    expect(board.render).to eq(rendered_board)
+    board.cells["A2"].fire_upon
+    board.cells["A3"].fire_upon
+    rendered_board = "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n"
+    expect(board.render).to eq(rendered_board)
+    board.cells["D3"].fire_upon
+    rendered_board = "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . M . \n"
+    expect(board.render).to eq(rendered_board)
+  end
 end
