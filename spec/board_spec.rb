@@ -29,6 +29,9 @@ RSpec.describe 'Board' do
     # Testing diagonal
     expect(board.valid_placement?(cruiser,["A1", "B2", "C3"])).to be false
 
+    # Test backwards is false
+    expect(board.valid_placement?(cruiser,["A3", "A2", "A1"])).to be false
+
     # Testing sub
     expect(board.valid_placement?(submarine,["A1", "B1"])).to be true
     # Testing length

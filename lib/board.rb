@@ -11,6 +11,7 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    # SORT
     if ship.length == coordinates.length
       letters = []
       numbers = []
@@ -24,8 +25,7 @@ class Board
       if letters.uniq.length == 1 || numbers.uniq.length == 1
         if letters.uniq.length != 1
           letters.each_cons(2) do |letter|
-            # require 'pry'; binding.pry
-            if letter[0].ord - letter[1].ord == 1 || letter[0].ord - letter[1].ord == -1
+            if letter[0].ord - letter[1].ord == -1
               return true
             end
           end
@@ -33,8 +33,7 @@ class Board
 
         if numbers.uniq.length != 1
           numbers.each_cons(2) do |number|
-            # require 'pry'; binding.pry
-            if number[0].ord - number[1].ord == 1 || number[0].ord - number[1].ord == -1
+            if number[0].ord - number[1].ord == -1
               return true
             end
           end
