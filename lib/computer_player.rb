@@ -28,15 +28,15 @@ class ComputerPlayer
         vertical_chunks << chunk
       end
       total_chunks = horizontal_chunks + vertical_chunks
-      require 'pry'; binding.pry
 
-      while true
-        if @board.valid_placement?(ship, (coords = total_chunks.sample))
+      total_chunks.shuffle!
+
+      total_chunks.each do |coords|
+        if @board.valid_placement?(ship, coords)
           @board.place(ship, coords)
           break
         end
       end
-      # require 'pry'; binding.pry
     end
 
 
