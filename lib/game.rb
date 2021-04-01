@@ -1,4 +1,3 @@
-require "awesome_print"
 require "./lib/computer_player"
 class Game
   attr_reader :player_board, :computer_board

@@ -2,7 +2,6 @@ require './lib/board'
 require './lib/cell'
 require './lib/ship'
 require './lib/game'
-require 'awesome_print'
 
 # player_board = Board.new
 # computer_board = Board.new
