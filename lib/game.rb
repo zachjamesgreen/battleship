@@ -8,17 +8,35 @@ class Game
   end
 
   def start
-    puts create_computer_player
-    # response = greet
-    # if response == "p"
-    #   place_ships
-    #
-    # elsif  response == "q"
-    #   puts "Bye"
-    # else
-    #   puts "Enter valid response"
-    #   start
-    # end
+
+    response = greet
+    if response == "p"
+      place_ships
+      create_computer_player
+    elsif  response == "q"
+      puts "Bye"
+    else
+      puts "Enter valid response"
+      start
+    end
+    while game_over
+      display_board
+      var = gets.chomp # shoot method
+      puts var
+    end
+  end
+
+  def game_over
+    @player_board.cells.each do |key, cell|
+      if !cell.empty? && cell.ship.sunk?
+        return true
+      end
+    end
+    @computer_board.cells.each do |key, cell|
+      if !cell.empty? && cell.ship.sunk?
+        return true
+      end
+    end
   end
 
   def greet
@@ -63,5 +81,14 @@ class Game
   def create_computer_player
     pc_player = ComputerPlayer.new(@computer_board)
     @computer_board.render(true)
+  end
+
+
+  def display_board
+    puts "=============COMPUTER BOARD============="
+    puts @computer_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @player_board.render(true)
+
   end
 end

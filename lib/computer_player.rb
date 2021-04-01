@@ -38,37 +38,6 @@ class ComputerPlayer
         end
       end
     end
-
-
-
-
-
-
-
-    # ships.each do |ship|
-    #   while true do
-    #       ship.length.times do |index|
-    #         # A1
-    #         coordinates << @board.cells.keys.sample
-    #       end
-    #       puts coordinates
-    #       if @board.valid_placement?(ship, coordinates)
-    #         @board.place(ship, coordinates)
-    #         break
-    #       end
-    #     end
-    # end
-
-
-
-
-
-    # or place ships algorithmicly
   end
-
-  def hor_or_vert
-
-  end
-
 
 end
