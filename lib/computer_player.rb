@@ -40,4 +40,17 @@ class ComputerPlayer
     end
   end
 
+  def computer_takes_shot(player_board)
+    until player_board.valid_coordinate?(shot = player_board.cells.keys.sample) == true
+      require'pry';binding.pry
+      loop
+    end
+    cell = player_board.cells[shot]
+    if player_board.cells[shot].fired_upon?
+      computer_takes_shot(player_board)
+    else
+      cell.fire_upon
+    end
+  end
+
 end

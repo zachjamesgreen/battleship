@@ -1,9 +1,10 @@
 require "./lib/computer_player"
 class Game
-  attr_reader :player_board, :computer_board
+  attr_reader :player_board, :computer_board, :pc_player
   def initialize()
     @player_board = Board.new
     @computer_board = Board.new
+    @pc_player = ComputerPlayer.new(@computer_board)
   end
 
   def start
@@ -40,8 +41,7 @@ class Game
 
   def take_turn
     puts "Enter the coordinate for your shot:"
-    shot = gets.chomp
-    until @computer_board.valid_coordinate?(shot)
+    until @computer_board.valid_coordinate?(shot = gets.chomp.upcase)
       puts "Please enter a valid coordinate:"
     end
     cell = @computer_board.cells[shot]
@@ -50,6 +50,7 @@ class Game
       take_turn
     else
       cell.fire_upon
+      @pc_player.computer_takes_shot(@player_board)
     end
 
   end
@@ -105,4 +106,5 @@ class Game
     puts @player_board.render(true)
 
   end
+
 end
