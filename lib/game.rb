@@ -21,8 +21,7 @@ class Game
     end
     while game_over
       display_board
-      var = gets.chomp # shoot method
-      puts var
+      take_turn
     end
   end
 
@@ -37,6 +36,22 @@ class Game
         return true
       end
     end
+  end
+
+  def take_turn
+    puts "Enter the coordinate for your shot:"
+    shot = gets.chomp
+    until @computer_board.valid_coordinate?(shot)
+      puts "Please enter a valid coordinate:"
+    end
+    cell = @computer_board.cells[shot]
+    if @computer_board.cells[shot].fired_upon?
+      puts "You have already chosen this square. Please choose another."
+      take_turn
+    else
+      cell.fire_upon
+    end
+
   end
 
   def greet
