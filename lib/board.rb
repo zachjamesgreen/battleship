@@ -60,9 +60,6 @@ class Board
     end
   end
 
-# coordinate @cells.keys[0][0] && 1,2,3
-# coordinate cells.keys[0][1] && A,B,C
-
 
   def create_cells
     ["A","B","C","D"].each do |letter|
