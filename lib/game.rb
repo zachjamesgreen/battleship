@@ -50,6 +50,13 @@ class Game
       take_turn
     else
       cell.fire_upon
+      if cell.render == "M"
+        p "Your shot on #{shot} was a miss."
+      elsif cell.render == "H"
+        p "Your shot on #{shot} was a hit!"
+      else cell.render == "X"
+        p "Your shot was on #{shot} and you sunk my ship!"
+      end
       @pc_player.computer_takes_shot(@player_board)
     end
 

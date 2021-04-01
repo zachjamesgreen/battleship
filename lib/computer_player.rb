@@ -42,7 +42,7 @@ class ComputerPlayer
 
   def computer_takes_shot(player_board)
     until player_board.valid_coordinate?(shot = player_board.cells.keys.sample) == true
-      require'pry';binding.pry
+      # require'pry';binding.pry
       loop
     end
     cell = player_board.cells[shot]
@@ -50,6 +50,13 @@ class ComputerPlayer
       computer_takes_shot(player_board)
     else
       cell.fire_upon
+      if cell.render == "M"
+        p "My shot on #{shot} was a miss."
+      elsif cell.render == "H"
+        p "My shot on #{shot} was a hit!"
+      else cell.render == "X"
+        p  "My shot was on #{shot} and I sunk your ship!"
+      end
     end
   end
 
