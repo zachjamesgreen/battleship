@@ -31,15 +31,30 @@ class Game
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render
     puts "Enter the squares for the Cruiser (3 spaces):"
-    coords = gets.chomp
+
+
     player_cruiser = Ship.new("Cruiser", 3)
     player_sub = Ship.new("Sub", 2)
-    player_board.place(player_cruiser, coords.upcase.split(" "))
-    puts @player_board.render(true)
-    puts "Enter the squares for the Sub (2 spaces):"
-    coords = gets.chomp
-    player_board.place(player_sub, coords.upcase.split(" "))
+
+    place_ship(player_cruiser, gets.chomp)
+    place_ship(player_sub, gets.chomp)
+
+
     puts @player_board.render(true)
 
+  end
+
+  def place_ship(ship, coords)
+    puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
+    coords_array = coords.upcase.split(" ")
+    if @player_board.valid_placement?(ship, coords_array)
+
+      @player_board.place(ship, coords_array)
+      @player_board.render(true)
+      # require 'pry'; binding.pry
+    else
+      puts "Those are invalid coordinates. Please try again:"
+      place_ship(ship, gets.chomp)
+    end
   end
 end
