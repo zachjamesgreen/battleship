@@ -11,11 +11,13 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    # SORT
     if ship.length == coordinates.length
       letters = []
       numbers = []
       coordinates.each do |coordinate|
+        if @cells[coordinate].empty?
+          return false
+        end
         if valid_coordinate?(coordinate) == false
           return false
         end
@@ -63,8 +65,8 @@ class Board
 
   def create_cells
     ["A","B","C","D"].each do |letter|
-      ["1","2","3","4"].each do |number|
-        name = letter+number
+       ["1","2","3","4"].each do |number|
+        name = letter + number
         @cells[name] = Cell.new(name)
       end
     end

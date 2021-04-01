@@ -1,4 +1,5 @@
 require "awesome_print"
+require "./lib/computer_player"
 class Game
   attr_reader :player_board, :computer_board
   def initialize()
@@ -7,16 +8,17 @@ class Game
   end
 
   def start
-    response = greet
-    if response == "p"
-      place_ships
-
-    elsif  response == "q"
-      puts "Bye"
-    else
-      puts "Enter valid response"
-      start
-    end
+    puts create_computer_player
+    # response = greet
+    # if response == "p"
+    #   place_ships
+    #
+    # elsif  response == "q"
+    #   puts "Bye"
+    # else
+    #   puts "Enter valid response"
+    #   start
+    # end
   end
 
   def greet
@@ -56,5 +58,10 @@ class Game
       puts "Those are invalid coordinates. Please try again:"
       place_ship(ship, gets.chomp)
     end
+  end
+
+  def create_computer_player
+    pc_player = ComputerPlayer.new(@computer_board)
+    @computer_board.render(true)
   end
 end
