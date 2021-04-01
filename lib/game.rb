@@ -14,6 +14,7 @@ class Game
       create_computer_player
     elsif  response == "q"
       puts "Bye"
+      return
     else
       puts "Enter valid response"
       start
@@ -49,23 +50,22 @@ class Game
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render
-    puts "Enter the squares for the Cruiser (3 spaces):"
 
 
     player_cruiser = Ship.new("Cruiser", 3)
     player_sub = Ship.new("Sub", 2)
 
-    place_ship(player_cruiser, gets.chomp)
-    place_ship(player_sub, gets.chomp)
+    place_ship(player_cruiser)
+    place_ship(player_sub)
 
 
     puts @player_board.render(true)
 
   end
 
-  def place_ship(ship, coords)
+  def place_ship(ship)
     puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
-    coords_array = coords.upcase.split(" ")
+    coords_array = gets.chomp.upcase.split(" ")
     if @player_board.valid_placement?(ship, coords_array)
 
       @player_board.place(ship, coords_array)
@@ -73,7 +73,7 @@ class Game
       # require 'pry'; binding.pry
     else
       puts "Those are invalid coordinates. Please try again:"
-      place_ship(ship, gets.chomp)
+      place_ship(ship)
     end
   end
 
