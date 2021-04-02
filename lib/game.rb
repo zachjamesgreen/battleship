@@ -5,6 +5,7 @@ class Game
     @player_board = Board.new
     @computer_board = Board.new
     @pc_player = ComputerPlayer.new(@computer_board)
+    @game_over = true
   end
 
   def start
@@ -19,20 +20,22 @@ class Game
       puts "Enter valid response"
       start
     end
-    while game_over
+    while @game_over
       display_board
       take_turn
     end
+    start
   end
 
-  def game_over
+
+
+  def check_for_winner
     computer_board_ships = @computer_board.cells.select do |key, value|
       value.ship != nil
     end
     player_board_ships = @player_board.cells.select do |key, value|
       value.ship != nil
     end
-
     computer_health = computer_board_ships.values.sum do |cell|
       cell.ship.health
     end
@@ -41,27 +44,15 @@ class Game
     end
 
     if computer_health > 0 && player_health > 0
-      true
+      @game_over = true
     elsif computer_health == 0
       p "You won!"
-      return false
+      @game_over = false
     elsif player_health == 0
       p "I won!"
-      return false
+      @game_over = false
     end
-
-    # require'pry';binding.pry
   end
-
-  # def check_for_winner
-  #   computer_board_ships = @computer_board.cells.select do |key, value|
-  #     value.ship != nil
-  #   end
-  #   player_board_ships = @player_board.cells.select do |key, value|
-  #     value.ship != nil
-  #   end
-  #
-  # end
 
   def take_turn
     puts "Enter the coordinate for your shot:"
@@ -81,7 +72,11 @@ class Game
       else cell.render == "X"
         p "Your shot was on #{shot} and you sunk my ship!"
       end
+      if check_for_winner == false
+        return
+      end
       @pc_player.computer_takes_shot(@player_board)
+      check_for_winner
     end
   end
 
