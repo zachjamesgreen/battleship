@@ -9,7 +9,6 @@ class Game
   end
 
   def start
-
     response = greet
     if response == "p"
       place_ships
@@ -26,8 +25,6 @@ class Game
     end
     start
   end
-
-
 
   def check_for_winner
     computer_board_ships = @computer_board.cells.select do |key, value|
