@@ -2,15 +2,16 @@ require "./lib/computer_player"
 class Game
   attr_reader :player_board, :computer_board, :pc_player
   def initialize()
-    @player_board = Board.new(9,26)
-    @computer_board = Board.new(9,26)
-    @pc_player = ComputerPlayer.new(@computer_board)
+    @player_board = nil
+    @computer_board = nil
+    @pc_player = nil
     @game_over = true
   end
 
   def start
     response = greet
     if response == "p"
+      board_size
       place_ships
     elsif  response == "q"
       puts "Bye"
@@ -19,12 +20,25 @@ class Game
       puts "Enter valid response"
       start
     end
-    # choose board size
     while @game_over
       display_board
       take_turn
     end
     start
+  end
+
+  def board_size
+    puts "Choose the width of your board with a max of 9:"
+    width = gets.chomp.to_i
+    puts "Choose the height of your board with a max of 26:"
+    height = gets.chomp.to_i
+    create_players(width, height)
+  end
+
+  def create_players(width, height)
+    @player_board = Board.new(width, height)
+    @computer_board = Board.new(width, height)
+    @pc_player = ComputerPlayer.new(@computer_board)
   end
 
   def check_for_winner
