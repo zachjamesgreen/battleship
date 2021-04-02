@@ -1,9 +1,11 @@
 require "./lib/computer_player"
 class Game
-  attr_reader :player_board, :computer_board
+  attr_reader :player_board, :computer_board, :pc_player
   def initialize()
     @player_board = Board.new
     @computer_board = Board.new
+    @pc_player = ComputerPlayer.new(@computer_board)
+    @game_over = true
   end
 
   def start
@@ -11,7 +13,6 @@ class Game
     response = greet
     if response == "p"
       place_ships
-      create_computer_player
     elsif  response == "q"
       puts "Bye"
       return
@@ -19,29 +20,43 @@ class Game
       puts "Enter valid response"
       start
     end
-    while game_over
+    while @game_over
       display_board
       take_turn
     end
+    start
   end
 
-  def game_over
-    @player_board.cells.each do |key, cell|
-      if !cell.empty? && cell.ship.sunk?
-        return true
-      end
+
+
+  def check_for_winner
+    computer_board_ships = @computer_board.cells.select do |key, value|
+      value.ship != nil
     end
-    @computer_board.cells.each do |key, cell|
-      if !cell.empty? && cell.ship.sunk?
-        return true
-      end
+    player_board_ships = @player_board.cells.select do |key, value|
+      value.ship != nil
+    end
+    computer_health = computer_board_ships.values.sum do |cell|
+      cell.ship.health
+    end
+    player_health = player_board_ships.values.sum do |cell|
+      cell.ship.health
+    end
+
+    if computer_health > 0 && player_health > 0
+      @game_over = true
+    elsif computer_health == 0
+      p "You won!"
+      @game_over = false
+    elsif player_health == 0
+      p "I won!"
+      @game_over = false
     end
   end
 
   def take_turn
     puts "Enter the coordinate for your shot:"
-    shot = gets.chomp
-    until @computer_board.valid_coordinate?(shot)
+    until @computer_board.valid_coordinate?(shot = gets.chomp.upcase)
       puts "Please enter a valid coordinate:"
     end
     cell = @computer_board.cells[shot]
@@ -50,8 +65,19 @@ class Game
       take_turn
     else
       cell.fire_upon
+      if cell.render == "M"
+        p "Your shot on #{shot} was a miss."
+      elsif cell.render == "H"
+        p "Your shot on #{shot} was a hit!"
+      else cell.render == "X"
+        p "Your shot was on #{shot} and you sunk my ship!"
+      end
+      if check_for_winner == false
+        return
+      end
+      @pc_player.computer_takes_shot(@player_board)
+      check_for_winner
     end
-
   end
 
   def greet
@@ -105,4 +131,5 @@ class Game
     puts @player_board.render(true)
 
   end
+
 end
