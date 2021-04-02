@@ -1,8 +1,8 @@
 require './lib/ship.rb'
 require './lib/cell.rb'
 
-
 RSpec.describe 'Cell' do
+
   it "it exist" do
     cell = Cell.new("A2")
     expect(cell).to be_instance_of(Cell)
@@ -21,6 +21,7 @@ RSpec.describe 'Cell' do
   end
 
   describe 'methods' do
+
     it 'cell block is empty? - true' do
       cell = Cell.new("A2")
       ship = Ship.new("Cruiser", 3)
@@ -59,7 +60,6 @@ RSpec.describe 'Cell' do
       expect(cell.render).to eq("M")
     end
 
-
     it 'method renders correctly' do
       cell_1 = Cell.new("A1")
       cell_2 = Cell.new("A2")
@@ -76,8 +76,6 @@ RSpec.describe 'Cell' do
       expect(cell_1.render).to eq("X")
     end
 
-
   end
-
 
 end

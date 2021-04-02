@@ -1,6 +1,9 @@
 require './lib/cell'
+
 class Board
+
   attr_reader :cells
+
   def initialize()
     @cells = {}
     create_cells
@@ -10,73 +13,46 @@ class Board
     @cells.key?(coordinate)
   end
 
-  def valid_coordinates(coordinates)
+  def valid_placement?(ship, coordinates)
+    if ship.length != coordinates.length
+      return false
+    end
+    letters = []
+    numbers = []
     coordinates.each do |coordinate|
+      unless @cells[coordinate].empty?
+        return false
+      end
       if valid_coordinate?(coordinate) == false
         return false
       end
       letters << coordinate[0]
       numbers << coordinate[1]
     end
+    return check_letters_and_numbers(letters, numbers)
+  end
+
+  def check_letters_and_numbers(letters, numbers)
+    check = false
     if letters.uniq.length == 1 || numbers.uniq.length == 1
       if letters.uniq.length != 1
         letters.each_cons(2) do |letter|
-          if letter[0].ord - letter[1].ord == -1
-            return true
+          if letter[0].ord - letter[1].ord != -1
+            return false
           end
         end
+        check = true
       end
-
       if numbers.uniq.length != 1
         numbers.each_cons(2) do |number|
-          if number[0].ord - number[1].ord == -1
-            return true
+          if number[0].ord - number[1].ord != -1
+            return false
           end
         end
-      end
-
-
-    end
-  end
-
-  def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length
-      letters = []
-      numbers = []
-      coordinates.each do |coordinate|
-        unless @cells[coordinate].empty?
-          return false
-        end
-        if valid_coordinate?(coordinate) == false
-          return false
-        end
-        letters << coordinate[0]
-        numbers << coordinate[1]
-      end
-      if letters.uniq.length == 1 || numbers.uniq.length == 1
-        if letters.uniq.length != 1
-          letters.each_cons(2) do |letter|
-            if letter[0].ord - letter[1].ord != -1
-
-              return false
-            end
-          end
-          return true
-        end
-
-        if numbers.uniq.length != 1
-          numbers.each_cons(2) do |number|
-            if number[0].ord - number[1].ord != -1
-              return false
-            end
-          end
-          return true
-        end
-
-
+        check = true
       end
     end
-    false
+    return check
   end
 
   def render(show_ship = false)
