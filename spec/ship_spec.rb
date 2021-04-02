@@ -14,6 +14,7 @@ RSpec.describe 'Ship' do
   end
 
   describe 'methods' do
+
     it 'should have health' do
       ship = Ship.new("Cruiser", 3)
       expect(ship.health).to eq(3)
@@ -35,8 +36,6 @@ RSpec.describe 'Ship' do
       expect(ship.health).to eq(2)
     end
 
-    # it 'cant be hit more than the health' do
-    # end
   end
 
 end

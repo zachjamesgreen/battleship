@@ -1,6 +1,9 @@
 require './lib/cell'
+
 class Board
+
   attr_reader :cells
+
   def initialize()
     @cells = {}
     create_cells
@@ -9,37 +12,6 @@ class Board
   def valid_coordinate?(coordinate)
     @cells.key?(coordinate)
   end
-
-  def valid_coordinates(coordinates)
-    coordinates.each do |coordinate|
-      if valid_coordinate?(coordinate) == false
-        return false
-      end
-      letters << coordinate[0]
-      numbers << coordinate[1]
-    end
-    if letters.uniq.length == 1 || numbers.uniq.length == 1
-      if letters.uniq.length != 1
-        letters.each_cons(2) do |letter|
-          if letter[0].ord - letter[1].ord == -1
-            return true
-          end
-        end
-      end
-
-      if numbers.uniq.length != 1
-        numbers.each_cons(2) do |number|
-          if number[0].ord - number[1].ord == -1
-            return true
-          end
-        end
-      end
-
-
-    end
-  end
-
-
 
   def valid_placement?(ship, coordinates)
     if ship.length != coordinates.length
