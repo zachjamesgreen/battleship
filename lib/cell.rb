@@ -32,7 +32,7 @@ class Cell
       "X"
     elsif @hit
       "H"
-    elsif show_ship == true && !empty?
+    elsif show_ship && !empty?
       "S"
     else
       "."

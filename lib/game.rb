@@ -53,7 +53,7 @@ class Game
 
   def take_turn
     puts "Enter the coordinate for your shot:"
-    until @computer_board.valid_coordinate?(shot = gets.chomp.upcase)
+    until @computer_board.valid_coordinate?((shot = gets.chomp.upcase))
       puts "Please enter a valid coordinate:"
     end
     cell = @computer_board.cells[shot]
@@ -69,7 +69,7 @@ class Game
       else cell.render == "X"
         p "Your shot was on #{shot} and you sunk my ship!"
       end
-      if check_for_winner == false
+      if !check_for_winner
         return
       end
       @pc_player.computer_takes_shot(@player_board)
@@ -114,12 +114,6 @@ class Game
       place_ship(ship)
     end
   end
-
-  def create_computer_player
-    pc_player = ComputerPlayer.new(@computer_board)
-    @computer_board.render(true)
-  end
-
 
   def display_board
     puts "=============COMPUTER BOARD============="

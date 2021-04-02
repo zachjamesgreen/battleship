@@ -19,7 +19,6 @@ class ComputerPlayer
     horizontal = @board.cells.keys
     vertical = @board.cells.keys.sort{|a,b| a[1] <=> b[1]}
 
-
     ships.each do |ship|
       horizontal.each_cons(ship.length) do |chunk|
         horizontal_chunks << chunk

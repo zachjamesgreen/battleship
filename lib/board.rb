@@ -34,8 +34,6 @@ class Board
           end
         end
       end
-
-
     end
   end
 
@@ -72,8 +70,6 @@ class Board
           end
           return true
         end
-
-
       end
     end
     false
@@ -93,7 +89,6 @@ class Board
       @cells[coordinate].place_ship(ship)
     end
   end
-
 
   def create_cells
     ["A","B","C","D"].each do |letter|
