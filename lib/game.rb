@@ -2,8 +2,8 @@ require "./lib/computer_player"
 class Game
   attr_reader :player_board, :computer_board, :pc_player
   def initialize()
-    @player_board = Board.new
-    @computer_board = Board.new
+    @player_board = Board.new(9,26)
+    @computer_board = Board.new(9,26)
     @pc_player = ComputerPlayer.new(@computer_board)
     @game_over = true
   end
@@ -19,6 +19,7 @@ class Game
       puts "Enter valid response"
       start
     end
+    # choose board size
     while @game_over
       display_board
       take_turn

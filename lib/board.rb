@@ -2,10 +2,14 @@ require './lib/cell'
 
 class Board
 
-  attr_reader :cells
+  attr_reader :cells, :height, :width
 
-  def initialize()
+  def initialize(width, height)
+    @width = width # Numbers
+    @height = height # Letters
     @cells = {}
+    @letters_array = ("A".."Z").to_a[0..height-1]
+    @numbers_array = (1..9).to_a[0..width-1]
     create_cells
   end
 
@@ -55,12 +59,19 @@ class Board
     return check
   end
 
+
   def render(show_ship = false)
-    string = "  1 2 3 4 \n"
-    string += "A #{cells["A1"].render(show_ship)} #{cells["A2"].render(show_ship)} #{cells["A3"].render(show_ship)} #{cells["A4"].render(show_ship)} \n"
-    string += "B #{cells["B1"].render(show_ship)} #{cells["B2"].render(show_ship)} #{cells["B3"].render(show_ship)} #{cells["B4"].render(show_ship)} \n"
-    string += "C #{cells["C1"].render(show_ship)} #{cells["C2"].render(show_ship)} #{cells["C3"].render(show_ship)} #{cells["C4"].render(show_ship)} \n"
-    string += "D #{cells["D1"].render(show_ship)} #{cells["D2"].render(show_ship)} #{cells["D3"].render(show_ship)} #{cells["D4"].render(show_ship)} \n"
+    string = "  #{@numbers_array.join(" ")} \n"
+
+    @letters_array.length.times do |i|
+      string += "#{@letters_array[i]} "
+      @numbers_array.length.times do |j|
+        name = @letters_array[i]+@numbers_array[j].to_s
+        string += "#{cells["#{name}"].render(show_ship)} "
+      end
+      string += " \n"
+    end
+
     string
   end
 
@@ -72,11 +83,12 @@ class Board
 
 
   def create_cells
-    ["A","B","C","D"].each do |letter|
-       ["1","2","3","4"].each do |number|
-        name = letter + number
+    @letters_array.each do |letter|
+      @numbers_array.each do |number|
+        name = letter + number.to_s
         @cells[name] = Cell.new(name)
       end
     end
   end
+
 end
