@@ -12,7 +12,6 @@ class Game
     response = greet
     if response == "p"
       place_ships
-      create_computer_player
     elsif  response == "q"
       puts "Bye"
       return
@@ -27,17 +26,42 @@ class Game
   end
 
   def game_over
-    @player_board.cells.each do |key, cell|
-      if !cell.empty? && cell.ship.sunk?
-        return true
-      end
+    computer_board_ships = @computer_board.cells.select do |key, value|
+      value.ship != nil
     end
-    @computer_board.cells.each do |key, cell|
-      if !cell.empty? && cell.ship.sunk?
-        return true
-      end
+    player_board_ships = @player_board.cells.select do |key, value|
+      value.ship != nil
     end
+
+    computer_health = computer_board_ships.values.sum do |cell|
+      cell.ship.health
+    end
+    player_health = player_board_ships.values.sum do |cell|
+      cell.ship.health
+    end
+
+    if computer_health > 0 && player_health > 0
+      true
+    elsif computer_health == 0
+      p "You won!"
+      return false
+    elsif player_health == 0
+      p "I won!"
+      return false
+    end
+
+    # require'pry';binding.pry
   end
+
+  # def check_for_winner
+  #   computer_board_ships = @computer_board.cells.select do |key, value|
+  #     value.ship != nil
+  #   end
+  #   player_board_ships = @player_board.cells.select do |key, value|
+  #     value.ship != nil
+  #   end
+  #
+  # end
 
   def take_turn
     puts "Enter the coordinate for your shot:"
@@ -59,7 +83,6 @@ class Game
       end
       @pc_player.computer_takes_shot(@player_board)
     end
-
   end
 
   def greet
