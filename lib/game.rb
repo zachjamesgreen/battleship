@@ -99,21 +99,38 @@ class Game
   end
 
   def place_ships
-    puts "I have laid out my ships on the grid."
-    puts "You now need to lay out your two ships."
-    puts "The Cruiser is three units long and the Submarine is two units long."
-    puts @player_board.render
+    puts "Would you like to create your own ships?(Y for yes, N for no)"
+    create_option = gets.chomp.upcase
+    if create_option == "Y"
+      puts "Great! Lets's get started!"
+      puts "How many ships would you like to create?"
+      number_of_ships = gets.chomp.to_i
+        number_of_ships.times do
+          puts "What would you like to name your ship?"
+          name = gets.chomp
+          puts "What is the length of your ship?"
+          # length = gets.chomp.to_i
+            until gets.chomp.to_i <= @player_board.width || gets.chomp.to_i <= @player_board.height
+              puts "That ship is too long for you board. Please try again."
+            end
+            place_ship(Ship.new(name, gets.chomp.to_i))
+        end
+    elsif create_option == "N"
+      puts "I have laid out my ships on the grid."
+      puts "You now need to lay out your two ships."
+      puts "The Cruiser is three units long and the Submarine is two units long."
+      puts @player_board.render
 
 
-    player_cruiser = Ship.new("Cruiser", 3)
-    player_sub = Ship.new("Sub", 2)
+      player_cruiser = Ship.new("Cruiser", 3)
+      player_sub = Ship.new("Sub", 2)
 
-    place_ship(player_cruiser)
-    place_ship(player_sub)
+      place_ship(player_cruiser)
+      place_ship(player_sub)
 
 
-    puts @player_board.render(true)
-
+      puts @player_board.render(true)
+    end
   end
 
   def place_ship(ship)
