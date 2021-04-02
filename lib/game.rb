@@ -105,6 +105,17 @@ class Game
       puts "Great! Lets's get started!"
       puts "How many ships would you like to create?"
       number_of_ships = gets.chomp.to_i
+      if number_of_ships > @player_board.height
+        max_ships = @player_board.height - 2
+      elsif  number_of_ships > @player_board.width
+        max_ships = @player_board.width - 2
+      else
+        max_ships = @player_board.width
+      end
+      if number_of_ships > max_ships
+        number_of_ships = max_ships
+        puts "The max number of ships for you board is #{max_ships}. Let's get them placed!"
+      end
       number_of_ships.times do
         puts "What would you like to name your ship?"
         name = gets.chomp
@@ -112,10 +123,10 @@ class Game
         length = nil
         loop do
           length = gets.chomp.to_i
-          if length <= @player_board.width || length <= @player_board.height
+          if (length <= @player_board.width || length <= @player_board.height) && length.is_a?(Integer) && length > 0
             break
           end
-          puts "That ship is too long for your board. Please try again."
+          puts "That ship is too long for your board or not valid. Please try again."
         end
         puts @player_board.render(true)
         place_ship(Ship.new(name, length))

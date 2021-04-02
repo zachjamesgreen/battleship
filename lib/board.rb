@@ -24,7 +24,7 @@ class Board
     letters = []
     numbers = []
     coordinates.each do |coordinate|
-      unless @cells[coordinate].empty?
+      unless @cells[coordinate] && @cells[coordinate].empty?
         return false
       end
       if valid_coordinate?(coordinate) == false
