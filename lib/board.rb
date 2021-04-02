@@ -69,7 +69,7 @@ class Board
         name = @letters_array[i]+@numbers_array[j].to_s
         string += "#{cells["#{name}"].render(show_ship)} "
       end
-      string += " \n"
+      string += "\n"
     end
 
     string

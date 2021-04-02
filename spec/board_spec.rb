@@ -3,7 +3,6 @@ require './lib/ship'
 
 RSpec.describe 'Board' do
   it 'exist and has cells' do
-    skip
     board = Board.new(6,6)
     ship = Ship.new("Cruiser", 3)
     expect(board).to be_instance_of(Board)
@@ -11,7 +10,6 @@ RSpec.describe 'Board' do
   end
 
   it 'should be valid coordinate' do
-    skip
     board = Board.new(6,6)
     ship = Ship.new("Cruiser", 3)
     expect(board.valid_coordinate?("A2")).to be true
@@ -20,7 +18,6 @@ RSpec.describe 'Board' do
   end
 
   it 'should be valid placement' do
-    skip
     board = Board.new(6,6)
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -44,16 +41,20 @@ RSpec.describe 'Board' do
     expect(board.valid_placement?(submarine,["A1", "B2"])).to be false
   end
 
-  it 'can be rendered' do
-    skip
+  it 'can be rendered at given size' do
     board = Board.new(6,6)
-    rendered_board = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    rendered_board = "  1 2 3 4 5 6 \nA . . . . . . \nB . . . . . . \nC . . . . . . \nD . . . . . . \nE . . . . . . \nF . . . . . . \n"
+    expect(board.render).to eq(rendered_board)
+  end
+
+  it 'can be rendered at given size 2x2' do
+    board = Board.new(2,2)
+    rendered_board = "  1 2 \nA . . \nB . . \n"
     expect(board.render).to eq(rendered_board)
   end
 
   it 'can be placed' do
-    skip
-    board = Board.new(6,6)
+    board = Board.new(4,4)
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["A1", "A2", "A3"])
     rendered_board = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
