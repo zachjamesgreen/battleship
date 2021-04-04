@@ -99,21 +99,54 @@ class Game
   end
 
   def place_ships
-    puts "I have laid out my ships on the grid."
-    puts "You now need to lay out your two ships."
-    puts "The Cruiser is three units long and the Submarine is two units long."
-    puts @player_board.render
+    puts "Would you like to create your own ships?(Y for yes, N for no)"
+    create_option = gets.chomp.upcase
+    if create_option == "Y"
+      puts "Great! Lets's get started!"
+      puts "How many ships would you like to create?"
+      number_of_ships = gets.chomp.to_i
+      if number_of_ships > @player_board.height
+        max_ships = @player_board.height - 2
+      elsif  number_of_ships > @player_board.width
+        max_ships = @player_board.width - 2
+      else
+        max_ships = @player_board.width
+      end
+      if number_of_ships > max_ships
+        number_of_ships = max_ships
+        puts "The max number of ships for you board is #{max_ships}. Let's get them placed!"
+      end
+      number_of_ships.times do
+        puts "What would you like to name your ship?"
+        name = gets.chomp
+        puts "What is the length of your ship?"
+        length = nil
+        loop do
+          length = gets.chomp.to_i
+          if (length <= @player_board.width || length <= @player_board.height) && length.is_a?(Integer) && length > 0
+            break
+          end
+          puts "That ship is too long for your board or not valid. Please try again."
+        end
+        puts @player_board.render(true)
+        place_ship(Ship.new(name, length))
+      end
+    elsif create_option == "N"
+      puts "I have laid out my ships on the grid."
+      puts "You now need to lay out your two ships."
+      puts "The Cruiser is three units long and the Submarine is two units long."
+      puts @player_board.render
 
 
-    player_cruiser = Ship.new("Cruiser", 3)
-    player_sub = Ship.new("Sub", 2)
+      player_cruiser = Ship.new("Cruiser", 3)
+      player_sub = Ship.new("Sub", 2)
 
-    place_ship(player_cruiser)
-    place_ship(player_sub)
+      place_ship(player_cruiser)
+      place_ship(player_sub)
 
 
-    puts @player_board.render(true)
-
+      puts @player_board.render(true)
+    end
   end
 
   def place_ship(ship)

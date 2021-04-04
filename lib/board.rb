@@ -24,7 +24,7 @@ class Board
     letters = []
     numbers = []
     coordinates.each do |coordinate|
-      unless @cells[coordinate].empty?
+      unless @cells[coordinate] && @cells[coordinate].empty?
         return false
       end
       if valid_coordinate?(coordinate) == false
@@ -38,6 +38,9 @@ class Board
 
   def check_letters_and_numbers(letters, numbers)
     check = false
+    if letters.length == 1
+      return true
+    end
     if letters.uniq.length == 1 || numbers.uniq.length == 1
       if letters.uniq.length != 1
         letters.each_cons(2) do |letter|
