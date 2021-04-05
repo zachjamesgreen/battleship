@@ -3,9 +3,6 @@ require './lib/cell'
 require './lib/ship'
 require './lib/game'
 
-# player_board = Board.new
-# computer_board = Board.new
-
 game = Game.new
 
 player_cruiser = Ship.new("Cruiser", 3)
