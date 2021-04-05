@@ -1,7 +1,7 @@
 class Cell
 
   attr_reader :coordinate, :ship, :hit
-  
+
   def initialize(coordinate)
     @coordinate = coordinate
     @hit = false
