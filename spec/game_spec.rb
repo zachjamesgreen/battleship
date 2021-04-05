@@ -17,11 +17,3 @@ RSpec.describe 'Game' do
 
   end
 end
-
-RSpec.describe 'ComputerPlayer' do
-  it 'should exist' do
-    board = Board.new(4,4)
-    pc_player = ComputerPlayer.new board
-    expect(pc_player).to be_instance_of(ComputerPlayer)
-  end
-end

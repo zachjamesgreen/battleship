@@ -46,7 +46,10 @@ class ComputerPlayer
     array << (((cell[0].ord - 1).chr) + cell[1])
     array << (cell[0] + (cell[1].to_i + 1).to_s)
     array << (cell[0] + (cell[1].to_i - 1).to_s)
-    require'pry';binding.pry
+    array.select! do |coordinate|
+      @board.valid_coordinate?(coordinate)
+    end
+    # require'pry';binding.pry
   end
 
   def get_player_board(player_board)
