@@ -39,6 +39,7 @@ class Game
     @player_board = Board.new(width, height)
     @computer_board = Board.new(width, height)
     @pc_player = ComputerPlayer.new(@computer_board)
+    @pc_player.get_player_board(@player_board)
   end
 
   def check_for_winner

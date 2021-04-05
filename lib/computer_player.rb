@@ -40,8 +40,21 @@ class ComputerPlayer
     end
   end
 
+  def find_neighbors(cell)
+    array = []
+    array << (((cell[0].ord + 1).chr) + cell[1])
+    array << (((cell[0].ord - 1).chr) + cell[1])
+    array << (cell[0] + (cell[1].to_i + 1).to_s)
+    array << (cell[0] + (cell[1].to_i - 1).to_s)
+    require'pry';binding.pry
+  end
+
+  def get_player_board(player_board)
+    @shots = player_board.cells.keys
+  end
+
   def computer_takes_shot(player_board)
-    until player_board.valid_coordinate?(shot = player_board.cells.keys.sample) == true
+    until player_board.valid_coordinate?(shot = @shots.sample) == true
       loop
     end
     cell = player_board.cells[shot]
@@ -53,6 +66,7 @@ class ComputerPlayer
         p "My shot on #{shot} was a miss."
       elsif cell.render == "H"
         p "My shot on #{shot} was a hit!"
+        @next_shot = find_neighbors(shot)
       else cell.render == "X"
         p  "My shot was on #{shot} and I sunk your ship!"
       end
