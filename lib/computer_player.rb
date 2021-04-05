@@ -6,6 +6,7 @@ class ComputerPlayer
   attr_reader :board
   def initialize(board)
     @board = board
+    @next_shots = []
     place_ships
   end
 
@@ -40,16 +41,23 @@ class ComputerPlayer
     end
   end
 
-  def find_neighbors(cell)
+  def find_neighbors(cell, player_board)
     array = []
-    array << (((cell[0].ord + 1).chr) + cell[1])
-    array << (((cell[0].ord - 1).chr) + cell[1])
-    array << (cell[0] + (cell[1].to_i + 1).to_s)
-    array << (cell[0] + (cell[1].to_i - 1).to_s)
+    cells_array = []
+    array << (((cell.coordinate[0].ord + 1).chr) + cell.coordinate[1])
+    array << (((cell.coordinate[0].ord - 1).chr) + cell.coordinate[1])
+    array << (cell.coordinate[0] + (cell.coordinate[1].to_i + 1).to_s)
+    array << (cell.coordinate[0] + (cell.coordinate[1].to_i - 1).to_s)
     array.select! do |coordinate|
       @board.valid_coordinate?(coordinate)
+      # require'pry';binding.pry
     end
-    # require'pry';binding.pry
+    array.each do |coordinate|
+      if player_board.cells[coordinate].fired_upon? == false
+        cells_array << coordinate
+      end
+    end
+    cells_array
   end
 
   def get_player_board(player_board)
@@ -57,8 +65,16 @@ class ComputerPlayer
   end
 
   def computer_takes_shot(player_board)
-    until player_board.valid_coordinate?(shot = @shots.sample) == true
-      loop
+    if @next_shots.empty?
+      until player_board.valid_coordinate?(shot = @shots.sample) == true
+        loop
+      end
+      @shots.delete(shot)
+    else
+      until player_board.valid_coordinate?(shot = @next_shots.sample) == true
+        loop
+      end
+      @next_shots.delete(shot)
     end
     cell = player_board.cells[shot]
     if player_board.cells[shot].fired_upon?
@@ -69,7 +85,6 @@ class ComputerPlayer
         p "My shot on #{shot} was a miss."
       elsif cell.render == "H"
         p "My shot on #{shot} was a hit!"
-        @next_shot = find_neighbors(shot)
       else cell.render == "X"
         p  "My shot was on #{shot} and I sunk your ship!"
       end
