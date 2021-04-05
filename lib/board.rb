@@ -62,7 +62,6 @@ class Board
     return check
   end
 
-
   def render(show_ship = false)
     string = "  #{@numbers_array.join(" ")} \n"
 
@@ -83,7 +82,6 @@ class Board
       @cells[coordinate].place_ship(ship)
     end
   end
-
 
   def create_cells
     @letters_array.each do |letter|

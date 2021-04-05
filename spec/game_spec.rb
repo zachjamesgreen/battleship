@@ -14,6 +14,6 @@ RSpec.describe 'Game' do
     expect(game.player_board).to be(nil)
     expect(game.computer_board).to be(nil)
     expect(game.pc_player).to be(nil)
-
   end
+  
 end
