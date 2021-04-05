@@ -7,13 +7,13 @@ class ComputerPlayer
   def initialize(board)
     @board = board
     @next_shots = []
-    place_ships
   end
 
-  def place_ships
+  def place_ships(ships)
+
     # place ships randomly
     rand = Random.new
-    ships = [Ship.new("Cruiser", 3), Ship.new("Sub", 2)]
+    # ships = [Ship.new("Cruiser", 3), Ship.new("Sub", 2)]
 
     horizontal_chunks = []
     vertical_chunks = []
@@ -85,8 +85,10 @@ class ComputerPlayer
         p "My shot on #{shot} was a miss."
       elsif cell.render == "H"
         p "My shot on #{shot} was a hit!"
+        @next_shots = find_neighbors(cell, player_board)
       else cell.render == "X"
         p  "My shot was on #{shot} and I sunk your ship!"
+        @next_shots = []
       end
     end
   end

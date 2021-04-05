@@ -117,6 +117,7 @@ class Game
         number_of_ships = max_ships
         puts "The max number of ships for you board is #{max_ships}. Let's get them placed!"
       end
+      ships_array = []
       number_of_ships.times do
         puts "What would you like to name your ship?"
         name = gets.chomp
@@ -131,6 +132,7 @@ class Game
         end
         puts @player_board.render(true)
         place_ship(Ship.new(name, length))
+        ships_array << Ship.new(name, length)
       end
     elsif create_option == "N"
       puts "I have laid out my ships on the grid."
@@ -141,13 +143,14 @@ class Game
 
       player_cruiser = Ship.new("Cruiser", 3)
       player_sub = Ship.new("Sub", 2)
-
+      ships_array = [Ship.new("Cruiser", 3), Ship.new("Sub", 2)]
       place_ship(player_cruiser)
       place_ship(player_sub)
 
 
       puts @player_board.render(true)
     end
+    @pc_player.place_ships(ships_array)
   end
 
   def place_ship(ship)
@@ -172,7 +175,7 @@ class Game
 
   def display_board
     puts "=============COMPUTER BOARD============="
-    puts @computer_board.render
+    puts @computer_board.render(true)
     puts "==============PLAYER BOARD=============="
     puts @player_board.render(true)
 
