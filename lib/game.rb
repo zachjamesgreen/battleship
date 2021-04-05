@@ -1,6 +1,9 @@
 require "./lib/computer_player"
+
 class Game
+
   attr_reader :player_board, :computer_board, :pc_player
+  
   def initialize()
     @player_board = nil
     @computer_board = nil
@@ -139,15 +142,11 @@ class Game
       puts "You now need to lay out your two ships."
       puts "The Cruiser is three units long and the Submarine is two units long."
       puts @player_board.render
-
-
       player_cruiser = Ship.new("Cruiser", 3)
       player_sub = Ship.new("Sub", 2)
       ships_array = [Ship.new("Cruiser", 3), Ship.new("Sub", 2)]
       place_ship(player_cruiser)
       place_ship(player_sub)
-
-
       puts @player_board.render(true)
     end
     @pc_player.place_ships(ships_array)
@@ -160,7 +159,6 @@ class Game
 
       @player_board.place(ship, coords_array)
       @player_board.render(true)
-      # require 'pry'; binding.pry
     else
       puts "Those are invalid coordinates. Please try again:"
       place_ship(ship)
@@ -171,7 +169,6 @@ class Game
     pc_player = ComputerPlayer.new(@computer_board)
     @computer_board.render(true)
   end
-
 
   def display_board
     puts "=============COMPUTER BOARD============="

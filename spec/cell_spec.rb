@@ -75,7 +75,6 @@ RSpec.describe 'Cell' do
       cell_3.fire_upon
       expect(cell_1.render).to eq("X")
     end
-
   end
 
 end

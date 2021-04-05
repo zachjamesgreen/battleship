@@ -3,23 +3,19 @@ require './lib/cell'
 require './lib/ship'
 
 class ComputerPlayer
+  
   attr_reader :board
+
   def initialize(board)
     @board = board
     @next_shots = []
   end
 
   def place_ships(ships)
-
-    # place ships randomly
-    rand = Random.new
-    # ships = [Ship.new("Cruiser", 3), Ship.new("Sub", 2)]
-
     horizontal_chunks = []
     vertical_chunks = []
     horizontal = @board.cells.keys
     vertical = @board.cells.keys.sort{|a,b| a[1] <=> b[1]}
-
 
     ships.each do |ship|
       horizontal.each_cons(ship.length) do |chunk|
@@ -29,9 +25,7 @@ class ComputerPlayer
         vertical_chunks << chunk
       end
       total_chunks = horizontal_chunks + vertical_chunks
-
       total_chunks.shuffle!
-
       total_chunks.each do |coords|
         if @board.valid_placement?(ship, coords)
           @board.place(ship, coords)
@@ -42,22 +36,21 @@ class ComputerPlayer
   end
 
   def find_neighbors(cell, player_board)
-    array = []
     cells_array = []
-    array << (((cell.coordinate[0].ord + 1).chr) + cell.coordinate[1])
-    array << (((cell.coordinate[0].ord - 1).chr) + cell.coordinate[1])
-    array << (cell.coordinate[0] + (cell.coordinate[1].to_i + 1).to_s)
-    array << (cell.coordinate[0] + (cell.coordinate[1].to_i - 1).to_s)
-    array.select! do |coordinate|
+    coordinate_array = []
+    cells_array << (((cell.coordinate[0].ord + 1).chr) + cell.coordinate[1])
+    cells_array << (((cell.coordinate[0].ord - 1).chr) + cell.coordinate[1])
+    cells_array << (cell.coordinate[0] + (cell.coordinate[1].to_i + 1).to_s)
+    cells_array << (cell.coordinate[0] + (cell.coordinate[1].to_i - 1).to_s)
+    cells_array.select! do |coordinate|
       @board.valid_coordinate?(coordinate)
-      # require'pry';binding.pry
     end
-    array.each do |coordinate|
+    cells_array.each do |coordinate|
       if player_board.cells[coordinate].fired_upon? == false
-        cells_array << coordinate
+        coordinate_array << coordinate
       end
     end
-    cells_array
+    coordinate_array
   end
 
   def get_player_board(player_board)

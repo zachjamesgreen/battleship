@@ -35,7 +35,6 @@ RSpec.describe 'Ship' do
       ship.hit
       expect(ship.health).to eq(2)
     end
-
   end
 
 end

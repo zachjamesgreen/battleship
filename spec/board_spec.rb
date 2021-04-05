@@ -14,7 +14,6 @@ RSpec.describe 'Board' do
     ship = Ship.new("Cruiser", 3)
     expect(board.valid_coordinate?("A2")).to be true
     expect(board.valid_coordinate?("A11")).to be false
-
   end
 
   it 'should be valid placement' do
@@ -28,10 +27,8 @@ RSpec.describe 'Board' do
     expect(board.valid_placement?(cruiser,["A1", "A2", "A3", "A4"])).to be false
     # Testing diagonal
     expect(board.valid_placement?(cruiser,["A1", "B2", "C3"])).to be false
-
     # Test backwards is false
     expect(board.valid_placement?(cruiser,["A3", "A2", "A1"])).to be false
-
     # Testing sub
     expect(board.valid_placement?(submarine,["A1", "B1"])).to be true
     # Testing length
@@ -75,6 +72,6 @@ RSpec.describe 'Board' do
     board = Board.new(6, 6)
     expect(board.height).to eq 6
     expect(board.width).to eq 6
-
   end
+  
 end
